@@ -19,14 +19,14 @@
 
     <div class="row">
         {% for product in product_object %}
-        <div class="col-md-3">
-            <div class="card">
-                <img style="height: 200px; width: auto;" src="{{ product.image }}" alt="" class="card-img-top">
+        <div class="col-md-3 pt-3" >
+            <div style="object-fit: cover; height: 100%; width: 100%;" class="card">
+                <img style="object-fit: cover; width: 100%; height: 100%;" src="{{ product.image }}" alt="" class="card-img-top">
                 <div class="card-body">
                     <div class="card-title">{{ product.title }}</div>
                     <div class="card-text text-warning">{{ product.price }} FCFA</div>
-                    <button class="btn btn-warning">Voir</button>
-                    <button class="btn btn-success">Ajouter</button>
+                    <a href="{{ product.id }}" class="btn btn-warning">Voir</a>
+                    <button id="{{ product.id }}" class="btn btn-success ted">Ajouter</button>
                 </div>
             </div>
         </div>
@@ -55,3 +55,18 @@
         </div>
     </div>
 {% endblock content %}
+{% block js %}
+    <script type="text/javascript">
+        console.log('just for testing');
+        if(localStorage.getItem('panier') == null){
+            var panier = {};
+        }else{
+            panier = JSON.parse(localStorage.getItem('panier'));
+        }
+        $(document).on('click', '.ted', function(){
+            console.log('ajouter');
+            var item_id = this.id.toString();
+            console.log(item_id)
+        })
+    </script>
+{% endblock js %}
