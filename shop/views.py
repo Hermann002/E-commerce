@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Product
 from django.core.paginator import Paginator
+from django.urls import reverse
 
 def index(request):
     product_object = Product.objects.all()
@@ -10,12 +11,15 @@ def index(request):
 
     paginator = Paginator(product_object, 4)
     page = request.GET.get('page')
-    product_object = paginator.get_page(page) 
+    product_object = paginator.get_page(page)
     context = {
-        'product_object' : product_object
+        'product_object' : product_object,
     }
     return render(request, 'shop/index.html', context)
 
 def detail(request, pk):
     product_object = Product.objects.get(pk=pk)
     return render(request, 'shop/detail.html', {'product' : product_object})
+
+def checkout(request):
+    return render(request, 'shop/checkout.html')

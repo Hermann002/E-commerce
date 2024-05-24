@@ -1,0 +1,29 @@
+{% extends "shop/base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <ul class="list-group" id="item-list">
+
+        </ul>
+    </div>
+</div>
+{% endblock content %}
+{% block js %}
+    <script type="text/javascript">
+      if(localStorage.getItem('panier')==null){
+        var panier = {};
+      }else{
+        panier = JSON.parse(localStorage.getItem('panier'))
+      }
+      for(item in panier){
+        let nom = panier[item][1];
+        let qte = panier[item][0];
+        let itemString = `<li class="list-group-item d-flex justify-content-between align-items-center">
+              ${nom}
+              QTE <span class="badge badge-primary badge-pill">${qte}</span>
+            </li>`
+            $('#item-list').append(itemString)
+      }
+    </script>
+{% endblock js %}

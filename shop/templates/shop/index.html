@@ -23,7 +23,7 @@
             <div style="object-fit: cover; height: 100%; width: 100%;" class="card">
                 <img style="object-fit: cover; width: 100%; height: 100%;" src="{{ product.image }}" alt="" class="card-img-top">
                 <div class="card-body">
-                    <div class="card-title">{{ product.title }}</div>
+                    <div id="aa{{ product.id }}" class="card-title">{{ product.title }}</div>
                     <div class="card-text text-warning">{{ product.price }} FCFA</div>
                     <a href="{{ product.id }}" class="btn btn-warning">Voir</a>
                     <button id="{{ product.id }}" class="btn btn-success ted">Ajouter</button>
@@ -64,9 +64,37 @@
             panier = JSON.parse(localStorage.getItem('panier'));
         }
         $(document).on('click', '.ted', function(){
-            console.log('ajouter');
             var item_id = this.id.toString();
-            console.log(item_id)
-        })
+            console.log(item_id);
+            if(panier[item_id]!= undefined){
+                qte = panier[item_id][0]+1;
+                panier[item_id][0] = qte;
+            }else{
+                qte = 1;
+                nom = document.getElementById("aa"+item_id).innerHTML;
+                panier[item_id] = [qte, nom];
+            }
+            console.log(panier);
+            localStorage.setItem('panier', JSON.stringify(panier));
+
+            let arr = Object.values(panier);
+            let len = arr.length;
+            document.getElementById("panier").innerHTML = len;
+        });
+        AfficherList(panier)
+        function AfficherList(panier){
+            var panierString = "";
+            panierString += "<h5>Voici votre liste</h5>";
+            var index = 1;
+            for(var x in panier){
+                panierString += index;
+                console.log(x)
+                panierString += "- " + document.getElementById("aa" + x).innerHTML + " Qte " +panier[x][0] + "</br>";
+                index +=1;
+            }
+            panierString += "<a href='{% url 'checkout' %}' class='btn btn-success'>Checkout</a>"
+            $('[data-toggle="popover"]').popover();
+            document.getElementById('panier-parent').setAttribute('data-content', panierString);
+        }
     </script>
 {% endblock js %}
