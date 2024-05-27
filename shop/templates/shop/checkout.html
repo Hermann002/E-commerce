@@ -8,6 +8,50 @@
         </ul>
     </div>
 </div>
+<div class="row">
+  <div class="col-md-12">
+    <form method="POST">
+      {% csrf_token %}
+      <input type="hidden" id="items" name="items">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputName">Nom</label>
+          <input name="inputName" type="text" class="form-control" id="inputName" placeholder="Nom">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputEmail">Email</label>
+          <input name="inputEmail" type="email" class="form-control" id="inputEmail" placeholder="email">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputAddress">Address</label>
+        <input name="inputAddress" type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputCity">Ville</label>
+          <input name="inputCity" type="text" class="form-control" id="inputCity">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputState">Pays</label>
+          <select name="inputState" id="inputState" class="form-control">
+            <option selected>Cameroun</option>
+            <option>Côte d'ivoire</option>
+            <option>Tchad</option>
+            <option>Benin</option>
+          </select>
+        </div>
+        <div class="form-group col-md-2">
+          <label for="inputZip">Zip</label>
+          <input name="zipcode" id="zipcode" type="text" class="form-control" id="inputZip">
+        </div>
+      </div>
+      <div class="form-group">
+      </div>
+      <button type="submit" class="btn btn-primary">Commander</button>
+    </form>
+  </div>
+</div>
 {% endblock content %}
 {% block js %}
     <script type="text/javascript">
@@ -25,5 +69,7 @@
             </li>`
             $('#item-list').append(itemString)
       }
+
+      $('#items').val(JSON.stringify(panier));
     </script>
 {% endblock js %}
